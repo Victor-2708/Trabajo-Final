@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-900">
+    <div id="login"></div>
+
+    <script type="text/babel">
+        function Navbar() {
+            const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+            const toggleMenu = () => {
+                setIsMenuOpen(!isMenuOpen);
+            };
+
+            return (
+                <nav className="bg-gray-900 p-4 text-white flex justify-between items-center">
+                    <h1 className="text-xl font-bold">PizzaApp</h1>
+                    <div className="hidden md:flex space-x-4">
+                        <a href="index.html" className="hover:text-gray-300">Home</a>
+                        <a href="Payment.html" className="hover:text-gray-300">Payment</a>
+                        <a href="Recommendation.html" className="hover:text-gray-300">Recommendation</a>
+                        <a href="Login.html" className="hover:text-gray-300">Login</a>
+                        <a href="Contact.html" className="hover:text-gray-300">Contact</a>
+                        <a href="About.html" className="hover:text-gray-300">About Us</a>
+                    </div>
+
+                    <div className="md:hidden">
+                        <button onClick={toggleMenu}>
+                            {isMenuOpen ? (
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            )}
+                        </button>
+                    </div>
+
+                    {isMenuOpen && (
+                        <div className="md:hidden absolute top-16 right-4 bg-gray-800 p-4 rounded-lg">
+                            <a href="index.html" className="block text-white hover:text-gray-300 mb-2">Home</a>
+                            <a href="Payment.html" className="block text-white hover:text-gray-300 mb-2">Payment</a>
+                            <a href="Recommendation.html" className="block text-white hover:text-gray-300 mb-2">Recommendation</a>
+                            <a href="Login.html" className="block text-white hover:text-gray-300 mb-2">Login</a>
+                            <a href="Contact.html" className="block text-white hover:text-gray-300 mb-2">Contact</a>
+                            <a href="About.html" className="block text-white hover:text-gray-300">About Us</a>
+                        </div>
+                    )}
+                </nav>
+            );
+        }
+
+        function Login() {
+            const handleLogin = () => {
+                alert("Login realizado");
+            };
+
+            const handleSignUp = () => {
+                alert("Registrado");
+            };
+
+            return (
+                <div>
+                    <Navbar />
+                    <div className="flex justify-center items-center h-screen px-4 md:px-0">
+                        <div className="bg-gray-300 p-8 rounded-lg shadow-lg max-w-md w-full text-center">
+                            <h2 className="text-3xl font-bold mb-4">Welcome</h2>
+
+                            <div className="mb-4">
+                                <label htmlFor="number" className="text-lg mb-2 block">Number</label>
+                                <input
+                                    type="text"
+                                    id="number"
+                                    placeholder="Enter your number"
+                                    className="w-full p-2 mb-4 rounded-md border border-gray-400"
+                                />
+                            </div>
+
+                            <div className="mb-6">
+                                <label htmlFor="password" className="text-lg mb-2 block">Password</label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="Enter your password"
+                                    className="w-full p-2 mb-4 rounded-md border border-gray-400"
+                                />
+                            </div>
+
+                            <div className="flex flex-col items-center justify-center space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+                                <button
+                                    onClick={handleLogin}
+                                    className="w-28 py-2 rounded bg-orange-500 text-white"
+                                    style={{ backgroundColor: '#f97316' }}
+                                >
+                                    Log in
+                                </button>
+                                <h2 className="py-2">OR</h2>
+                                <button
+                                    onClick={handleSignUp}
+                                    className="w-28 py-2 rounded bg-orange-500 text-white"
+                                    style={{ backgroundColor: '#f97316' }}
+                                >
+                                    Sign Up
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Login />, document.getElementById('login'));
+    </script>
+</body>
+</html>

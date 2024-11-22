@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recomendaciones de Pizzas</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-900">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function Navbar() {
+            const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+            const toggleMenu = () => {
+                setIsMenuOpen(prev => !prev);
+            };
+
+            return (
+                <nav className="bg-gray-900 p-4 text-white flex justify-between items-center relative">
+                    <h1 className="text-xl font-bold">PizzaApp</h1>
+
+                    <div className="hidden md:flex space-x-4">
+                        <a href="index.html" className="hover:text-gray-300">Inicio</a>
+                        <a href="Payment.html" className="hover:text-gray-300">Pago</a>
+                        <a href="Recommendation.html" className="hover:text-gray-300">Recomendaciones</a>
+                        <a href="Login.html" className="hover:text-gray-300">Login</a>
+                        <a href="Contact.html" className="hover:text-gray-300">Contact</a>
+                        <a href="About.html" className="hover:text-gray-300">Acerca de</a>
+                    </div>
+
+                    <div className="md:hidden">
+                        <button onClick={toggleMenu} className="text-white">
+                            {isMenuOpen ? (
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            )}
+                        </button>
+                    </div>
+
+                    {isMenuOpen && (
+                        <div className="md:hidden absolute top-16 right-4 bg-gray-800 p-4 rounded-lg shadow-lg w-48">
+                            <a href="index.html" className="block text-white hover:text-gray-300 mb-2">Inicio</a>
+                            <a href="Payment.html" className="block text-white hover:text-gray-300 mb-2">Pago</a>
+                            <a href="Recommendation.html" className="block text-white hover:text-gray-300 mb-2">Recomendaciones</a>
+                            <a href="Login.html" className="block text-white hover:text-gray-300 mb-2">Login</a>
+                            <a href="Contact.html" className="block text-white hover:text-gray-300 mb-2">Contact</a>
+                            <a href="About.html" className="block text-white hover:text-gray-300">Acerca de</a>
+                        </div>
+                    )}
+                </nav>
+            );
+        }
+
+        function RecommendedPizzas() {
+            const pizzas = [
+                { "id": 1, "name": "Pizza Vegetariana", "price": 40, "rating": 4.2, "description":"Deliciosa pizza cargada de una variedad de vegetales frescos como pimientos, cebollas, champiñones y espinacas, todo ello combinado con un suave queso mozzarella y una salsa de tomate casera. Ideal para quienes buscan una opción saludable sin sacrificar el sabor.", "imageUrl": "https://cdn.shopify.com/s/files/1/0191/9978/files/Pizza-Veggie-Supreme-blog.jpg?v=1652775259" },
+                { "id": 2, "name": "Pizza con Pepperoni", "price": 50, "rating": 5.0, "description":"La clásica pizza de pepperoni es un favorito entre los amantes de la carne. Con su base de salsa de tomate, abundante queso mozzarella y rodajas de pepperoni crujientes, esta pizza es perfecta para cualquier ocasión, ya sea una cena en familia o una reunión con amigos.", "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSArskfOI51OA-xtLn1xIq3NC6e5uDQ0fI1xA&s" },
+                { "id": 3, "name": "Pizza Suprema", "price": 50, "rating": 4.0, "description":"Una explosión de sabores en cada bocado, la pizza suprema está repleta de diferentes tipos de carne, incluyendo pepperoni, jamón y salchicha, además de cebolla, pimientos y aceitunas. Esta pizza es ideal para quienes no pueden decidirse por un solo sabor y quieren disfrutar de lo mejor de todos.", "imageUrl": "https://www.pizzahut.com.sv/static/media/images/images/jpg/4556_1_08-11-2023-10-57.jpg" },
+            ];
+
+            const recommendedPizzas = pizzas.sort((a, b) => b.rating - a.rating).slice(0, 3);
+
+            const storePizzaData = (pizzaId) => {
+                const selectedPizza = pizzas.find(pizza => pizza.id === pizzaId);
+                if (selectedPizza) {
+                    localStorage.setItem('selectedPizza', JSON.stringify(selectedPizza));
+                }
+                incrementPizzaVisit(pizzaId);
+            };
+
+            return (
+                <div className="container mx-auto mt-8">
+                    <h2 className="text-white text-center text-3xl font-semibold mb-6">Pizzas Recomendadas</h2>
+                    <div className="flex flex-wrap justify-center gap-6">
+                        {recommendedPizzas.map(pizza => (
+                            <div key={pizza.id} className="bg-gray-300 shadow-lg rounded-lg p-4 w-full sm:w-80 md:w-60 lg:w-80 flex flex-col">
+                                <img src={pizza.imageUrl} alt={pizza.name} className="w-full h-40 object-cover rounded-t-lg" />
+                                <h3 className="text-xl font-semibold mt-4">{pizza.name}</h3>
+                                <p className="text-black mt-2">{pizza.description}</p>
+                                <p className="font-bold mt-2">S/{pizza.price}</p>
+                                <p className="text-black">Rating: {pizza.rating}</p>
+                                
+                                <p className="text-black mt-2">
+                                    Visitas: {getPizzaVisits(pizza.id)}
+                                </p>
+                                
+                                <a href="Payment.html" className="mt-auto flex justify-center">
+                                    <button style={{ backgroundColor: '#F97316', color: 'white', padding: '10px 28px', borderRadius: '15px', fontSize: '1.1rem', width: '100%' }} 
+                                            onMouseOver={(e) => e.target.style.backgroundColor='#FB923C'}
+                                            onMouseOut={(e) => e.target.style.backgroundColor='#F97316'}
+                                            onClick={() => storePizzaData(pizza.id)}>
+                                        Pagar
+                                    </button>
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function App() {
+            return (
+                <div className="bg-gray-900">
+                    <Navbar />
+                    <RecommendedPizzas />
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+
+    <script src="component.recommendation.js"></script>
+</body>
+</html>
